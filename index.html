@@ -3,41 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng Trung Thu Bé Yêu 💗</title>
-    <!-- Tailwind CSS -->
+    <title>Trung Thu Trọn Vẹn Cùng Em</title>
+    <!-- Nạp Tailwind CSS để dựng layout nhanh -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Nạp Google Fonts: Dancing Script cho thơ, Quicksand cho văn xuôi -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Reset & Base */
         body {
             margin: 0;
-            overflow: hidden; /* Chặn cuộn trang chính */
-            background: linear-gradient(to bottom, #020111, #20124d, #000022);
+            overflow: hidden; /* Vô hiệu hóa cuộn trang ngoài cùng */
+            background: radial-gradient(circle at 50% 100%, #1a0b2e 0%, #020111 60%, #000000 100%);
             color: #ffffff;
             font-family: 'Quicksand', sans-serif;
             height: 100vh;
             width: 100vw;
         }
-        .font-dancing { font-family: 'Dancing Script', cursive; }
 
-        /* Hiệu ứng Mặt trăng */
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 40px 10px rgba(253, 224, 71, 0.4), inset 0 0 20px rgba(0,0,0,0.1); }
-            100% { box-shadow: 0 0 80px 25px rgba(253, 224, 71, 0.7), inset 0 0 20px rgba(0,0,0,0.1); }
+        .font-dancing { font-family: 'Dancing Script', cursive; }
+        .font-quicksand { font-family: 'Quicksand', sans-serif; }
+
+        @keyframes pulseMoon {
+            0% { box-shadow: 0 0 50px 15px rgba(253, 224, 71, 0.5), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1); }
+            100% { box-shadow: 0 0 100px 30px rgba(253, 224, 71, 0.8), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1.02); }
         }
         .moon {
             background: radial-gradient(circle at 35% 35%, #fffde4, #fde047, #ca8a04);
-            animation: pulseGlow 4s infinite alternate ease-in-out;
+            animation: pulseMoon 4s infinite alternate ease-in-out;
             cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 40;
         }
-        .moon:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .moon:hover { filter: brightness(1.2); }
 
-        /* Hiệu ứng Ngôi sao */
         .star {
             position: absolute;
             background-color: #ffffff;
@@ -46,10 +47,9 @@
         }
         @keyframes twinkle {
             0% { opacity: 0.1; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 5px #fff; }
+            100% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px #fff; }
         }
 
-        /* Hiệu ứng Đèn lồng bay */
         .lantern-container {
             position: absolute;
             bottom: -150px;
@@ -65,115 +65,124 @@
             100% { transform: translateY(-120vh) scale(var(--scale)); opacity: 0; }
         }
         @keyframes sway {
-            0% { transform: translateX(-15px) rotate(-5deg); }
-            100% { transform: translateX(15px) rotate(5deg); }
+            0% { transform: translateX(-20px) rotate(-8deg); }
+            100% { transform: translateX(20px) rotate(8deg); }
         }
-        .lantern-glow { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.8)); }
+        .lantern-glow { filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9)); }
 
-        /* Cấu hình Modal (Khung chứa tâm thư) */
         #love-modal {
-            backdrop-filter: blur(10px);
-            transition: opacity 0.5s ease;
+            backdrop-filter: blur(12px);
+            background-color: rgba(0, 0, 0, 0.6);
+            transition: opacity 0.8s ease;
         }
         
         #modal-content {
             scrollbar-width: thin;
-            scrollbar-color: #fde047 #20124d;
-            box-shadow: 0 0 40px rgba(253, 224, 71, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
-            /* Gradient cho viền mượt hơn */
-            border: 2px solid rgba(253, 224, 71, 0.4); 
+            scrollbar-color: #fde047 transparent;
+            mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
         }
-
-        /* Scrollbar cho Chrome/Safari/Edge */
         #modal-content::-webkit-scrollbar { width: 6px; }
-        #modal-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
+        #modal-content::-webkit-scrollbar-track { background: transparent; }
         #modal-content::-webkit-scrollbar-thumb { background: #fde047; border-radius: 10px; }
 
-        /* Style chữ Neon cho tâm thư */
-        .neon-text {
-            color: #fef08a; /* yellow-200 */
-            text-shadow: 0 0 5px rgba(253, 224, 71, 0.8), 0 0 15px rgba(202, 138, 4, 0.5);
+        .neon-poem {
+            color: #fef08a; /* Vàng nhạt */
+            text-shadow: 0 0 5px rgba(253, 224, 71, 0.6), 0 0 15px rgba(234, 179, 8, 0.4);
         }
         
-        .chot-ha {
-            animation: pulseGlow 2s infinite alternate ease-in-out;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ffff00;
+        .neon-essay {
+            color: #fce7f3; /* Hồng nhạt */
+            text-shadow: 0 0 4px rgba(244, 114, 182, 0.6), 0 0 12px rgba(219, 39, 119, 0.4);
         }
-        
-        /* Hiệu ứng loading nhẹ ở dưới đáy khi đang cuộn */
-        #loading-indicator {
-            display: none;
+
+        /* Animation xuất hiện mượt mà cho từng đoạn văn */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards ease-out;
         }
-        .loading-dots:after {
-            content: '.';
-            animation: dots 1.5s steps(5, end) infinite;
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes dots { 0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);} 40% { color: white; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);} 60% { text-shadow: .25em 0 0 white, .5em 0 0 rgba(0,0,0,0);} 80%, 100% { text-shadow: .25em 0 0 white, .5em 0 0 white;}}
+
+        .flash-neon-box {
+            border: 4px solid #fff;
+            box-shadow: 
+                0 0 10px #ff00de,
+                inset 0 0 10px #ff00de,
+                0 0 20px #ff00de,
+                inset 0 0 20px #ff00de,
+                0 0 40px #ff00de;
+            animation: boxPulsate 1.5s infinite alternate;
+            background: rgba(255, 0, 222, 0.1);
+        }
+        .flash-neon-text {
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #ff00de,
+                0 0 20px #ff00de,
+                0 0 40px #ff00de,
+                0 0 80px #ff00de;
+            animation: textFlicker 2s infinite alternate;
+        }
+
+        @keyframes boxPulsate {
+            0% { box-shadow: 0 0 10px #ff00de, inset 0 0 10px #ff00de; border-color: #ffb3f0; }
+            100% { box-shadow: 0 0 30px #ff00de, inset 0 0 30px #ff00de, 0 0 60px #ff00de; border-color: #fff; }
+        }
+        @keyframes textFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; text-shadow: 0 0 5px #fff, 0 0 10px #ff00de; }
+        }
 
     </style>
 </head>
 
 <body class="relative flex flex-col items-center justify-center">
 
-    <!-- Audio: Thay đổi đường dẫn đến file nhạc của bạn -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop autoplay>
         <source src="nhac/trungthu.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Nền vũ trụ -->
+    <!-- Vùng chứa bầu trời sao và đèn lồng -->
     <div id="stars-container" class="absolute inset-0 z-0 pointer-events-none"></div>
     <div id="lanterns-container" class="absolute inset-0 z-10 pointer-events-none overflow-hidden"></div>
 
-    <!-- Màn hình chào mừng ban đầu -->
-    <div id="welcome-screen" class="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full transition-opacity duration-700">
-        
-        <div id="the-moon" class="moon w-32 h-32 md:w-48 md:h-48 rounded-full mb-8 z-30" title="Chạm vào mặt trăng đi em!"></div>
-        
-        <p class="text-gray-300 text-sm md:text-base italic mb-4 animate-pulse">
-            (Chạm nhẹ vào mặt trăng nhé cục cưng...)
-        </p>
-
-        <h1 class="font-dancing text-5xl md:text-7xl text-yellow-300 drop-shadow-[0_0_15px_rgba(253,224,71,0.8)] mb-6 leading-tight">
-            Trung Thu Này<br>Dành Trọn Cho Em
+    <div id="welcome-screen" class="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
+        <div id="the-moon" class="moon w-40 h-40 md:w-56 md:h-56 rounded-full mb-10" title="Chạm vào mặt trăng đi em!"></div>
+        <h1 class="font-dancing text-4xl md:text-6xl text-yellow-300 drop-shadow-[0_0_15px_rgba(253,224,71,0.8)] mb-4 leading-tight">
+            Gửi Tình Yêu Của Anh
         </h1>
+        <p class="text-gray-300 text-sm md:text-lg italic animate-pulse">
+            (Chạm nhẹ vào mặt trăng để bắt đầu nhé...)
+        </p>
     </div>
 
-    <!-- Modal Chứa Tâm Thư (Ẩn đi ban đầu) -->
-    <div id="love-modal" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-black/80 px-2 py-4 md:p-8">
+    <div id="love-modal" class="fixed inset-0 z-40 hidden flex-col items-center justify-center px-2 py-4 md:p-6">
         
-        <div class="w-full max-w-4xl h-[90vh] md:h-[85vh] relative rounded-2xl bg-gradient-to-b from-[#1a0b2e]/90 to-[#020111]/90 shadow-2xl flex flex-col">
+        <div class="w-full max-w-5xl h-[95vh] relative rounded-3xl flex flex-col bg-transparent">
             
-            <!-- Header Modal -->
-            <div class="flex justify-between items-center p-4 border-b border-yellow-500/30">
-                <h2 class="font-dancing text-2xl md:text-3xl text-yellow-400 font-bold tracking-wider">Tiểu Luận Tình Yêu To Bự</h2>
-                <div class="flex items-center gap-4">
-                    <!-- Bộ đếm chữ live cho ngầu -->
-                    <span class="text-xs md:text-sm text-green-400 font-mono border border-green-500/50 px-2 py-1 rounded bg-green-900/20">
-                        Words: <span id="word-counter">0</span>/20000
-                    </span>
-                    <!-- Nút đóng -->
-                    <button id="close-modal" class="text-gray-400 hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </button>
+            <!-- Header Modal: Chứa Tiêu đề và Bộ đếm chữ -->
+            <div class="flex justify-between items-center p-4 md:px-8 pb-6 border-b border-yellow-500/20">
+                <h2 class="font-dancing text-3xl md:text-4xl text-yellow-300 font-bold tracking-wider drop-shadow-[0_0_10px_rgba(253,224,71,0.6)]">
+                    Lời Trái Tim
+                </h2>
+                <!-- Bộ đếm chữ góc trên bên phải -->
+                <div class="flex items-center gap-2">
+                    <div class="px-4 py-2 rounded-full border border-pink-500/50 bg-pink-900/20 shadow-[0_0_10px_rgba(236,72,153,0.3)] backdrop-blur-sm">
+                        <span class="text-sm md:text-base text-pink-200 font-semibold font-quicksand">
+                            Words: <span id="word-counter" class="text-white">0</span> / 20000
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Body Modal (Nơi scroll vô cực) -->
-            <div id="modal-content" class="flex-1 overflow-y-auto p-4 md:p-8 text-base md:text-lg lg:text-xl font-medium leading-relaxed neon-text space-y-6 scroll-smooth">
-                <!-- Nội dung sẽ được nhét vào đây bằng JS -->
-                
-                <div id="intro-paragraph" class="text-center mb-10 pb-6 border-b border-yellow-500/20">
-                    <p class="font-dancing text-3xl md:text-4xl text-pink-300 mb-4">Kính thưa: "Nóc nhà" vĩ đại của anh!</p>
-                    <p>Chào mừng em đến với bộ môn "Thử thách nhân phẩm điện thoại và sự kiên nhẫn của ngón tay". Em tưởng Trung Thu chỉ có ăn bánh, phá cỗ và ngắm trăng sao? Không, năm nay anh đã chuẩn bị cho em một bài nghị luận kết hợp thơ ca dài đúng 20.000 chữ. Cứ vuốt đi, vuốt mỏi tay thì thôi. Em càng vuốt, anh càng yêu em!</p>
-                </div>
-
-                <div id="infinite-scroll-container" class="space-y-6"></div>
-
-                <!-- Indicator loading -->
-                <div id="loading-indicator" class="text-center text-sm text-gray-400 py-4 italic">
-                    Đang rặn thêm chữ cho đủ 2 vạn<span class="loading-dots"></span>
+            <!-- Body Modal: Nơi chứa nội dung (Infinite Scroll) -->
+            <div id="modal-content" class="flex-1 overflow-y-auto px-4 md:px-12 py-8 scroll-smooth">
+                <div id="infinite-scroll-container" class="space-y-12 md:space-y-16 max-w-3xl mx-auto pb-20">
+                    <!-- Nội dung sẽ được append vào đây -->
                 </div>
             </div>
         </div>
@@ -182,23 +191,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- 1. SINH RA BẦU TRỜI SAO ---
             const starsContainer = document.getElementById('stars-container');
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = `${Math.random() * 100}vw`;
                 star.style.top = `${Math.random() * 100}vh`;
-                star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
-                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.width = star.style.height = `${Math.random() * 2.5 + 0.5}px`;
+                star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`;
                 starsContainer.appendChild(star);
             }
 
-            // --- 2. SINH RA ĐÈN LỒNG BAY ---
             const lanternsContainer = document.getElementById('lanterns-container');
             const lanternSVG = `
-                <svg width="40" height="60" viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg" class="lantern-glow">
+                <svg width="45" height="65" viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg" class="lantern-glow">
                     <line x1="25" y1="0" x2="25" y2="5" stroke="#FBBF24" stroke-width="2"/>
                     <rect x="15" y="5" width="20" height="4" fill="#F59E0B" rx="1"/>
                     <ellipse cx="25" cy="27" rx="20" ry="18" fill="#EF4444"/>
@@ -210,187 +217,141 @@
                     <line x1="30" y1="49" x2="35" y2="60" stroke="#FBBF24" stroke-width="1.5"/>
                 </svg>
             `;
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'lantern-container';
-                wrapper.style.left = `${Math.random() * 100}vw`;
-                wrapper.style.setProperty('--float-duration', `${Math.random() * 20 + 15}s`);
-                wrapper.style.animationDelay = `${Math.random() * 25}s`;
+                wrapper.style.left = `${Math.random() * 90 + 5}vw`; // Tránh sát lề quá
+                wrapper.style.setProperty('--float-duration', `${Math.random() * 25 + 20}s`);
+                wrapper.style.animationDelay = `${Math.random() * 30}s`;
                 
                 const swayDiv = document.createElement('div');
                 swayDiv.className = 'lantern-sway';
                 swayDiv.innerHTML = lanternSVG;
-                swayDiv.style.setProperty('--sway-duration', `${Math.random() * 2 + 2}s`);
-                swayDiv.style.setProperty('--scale', Math.random() * 0.6 + 0.6);
+                swayDiv.style.setProperty('--sway-duration', `${Math.random() * 2.5 + 2}s`);
+                swayDiv.style.setProperty('--scale', Math.random() * 0.5 + 0.6);
                 
                 wrapper.appendChild(swayDiv);
                 lanternsContainer.appendChild(wrapper);
             }
 
-            // --- 3. CƠ SỞ DỮ LIỆU CÁC ĐOẠN VĂN (DATA TROLL) ---
-            const trollParagraphs = [
-                // Toán
-                "Em biết không, tình yêu của anh dành cho em giống như một dãy số Fibonacci, ngày hôm nay luôn lớn hơn tổng của những ngày trước cộng lại. Nếu em là trục tung, anh xin nguyện làm trục hoành, để chúng ta cắt nhau tại một điểm duy nhất là nụ hôn này, và cùng nhau tạo ra một mặt phẳng tình yêu trải dài đến vô cực. Đạo hàm của tình yêu anh luôn mang dấu dương, nghĩa là nó đồng biến và không bao giờ có điểm cực đại!",
-                // Lý
-                "Theo định luật vạn vật hấp dẫn của nhà bác học vĩ đại Isaac Newton, lực hút giữa hai vật tỉ lệ thuận với khối lượng của chúng. Nhưng định luật này hoàn toàn sai bét khi đem áp dụng vào anh và em. Trái tim em bé tí teo, nhưng lực hút phát ra lại mạnh hơn cả một hố đen vũ trụ khổng lồ, hút cạn kiệt mọi sự chú ý, tâm trí và cả tiền bạc trong ví anh. Lực quán tính của anh bằng không mỗi khi đứng trước mặt em.",
-                // Hóa
-                "Phản ứng hóa học nào sinh ra nhiệt năng lớn nhất thế giới? Xin thưa, đó không phải là phản ứng phân hạch hạt nhân, mà là phản ứng khi ánh mắt anh vô tình va phải nụ cười của em. Chất xúc tác cực mạnh chính là sự ngây ngô đáng yêu đó, tạo ra một hợp chất kết tủa bền vững mang tên 'Si Tình'. Khẳng định luôn là không có bất kỳ dung môi nào, kể cả axit mạnh nhất, có thể hòa tan nổi hợp chất này.",
-                // Sinh
-                "Trái tim người bình thường đập ổn định khoảng 72 nhịp một phút. Nhưng hệ tuần hoàn của anh luôn báo lỗi nghiêm trọng mỗi khi em xuất hiện. Adrenaline tăng vọt lên não, dopamine tràn ngập mọi tế bào. Trong sinh học người ta gọi hiện tượng này là phản xạ có điều kiện. Còn đối với anh, anh gọi đó là 'điều kiện bắt buộc để anh có thể tiếp tục sống sót qua ngày'.",
-                // Thơ 1
-                "Trung thu trăng sáng như gương.<br>Anh ngồi ngắm cảnh nhớ thương một người.<br>Người đó vừa đọc vừa cười.<br>Hàm răng trắng bóc gấp mười hạt bắp.<br>Ai chê anh đói anh rách.<br>Anh xin vung tiền mua nguyên quán trà sữa cho em.",
-                // Thơ 2
-                "Chú Cuội ngồi gốc cây đa.<br>Bỏ trâu ăn lúa gọi cha ời ời.<br>Cha còn mải miết đi chơi.<br>Cuội đành ngồi đó trông trời ngắm trăng.<br>Ngắm trăng lại nhớ đến em.<br>Ăn chưa hay vẫn đang thèm ăn đêm?<br>Muốn ăn thì cứ gọi anh.<br>Freeship cháo sườn chạy quanh phố phường.",
-                // Ca dao chế
-                "Trăng đến rằm thì mặt trăng tròn, anh đến lúc mỏi mòn vẫn chỉ yêu mỗi mình em. Người xưa từng nói: Trên trời có đám mây xanh, ở giữa mây trắng xung quanh mây vàng, ước gì anh lấy được nàng, để anh mua gạch Bát Tràng về xây. Xây xong anh để đó ngắm, rồi mình dắt tay nhau lên chung cư ở cho có thang máy đi cho đỡ mỏi chân, em nhé?",
-                // Công nghệ IT
-                "Bộ não anh sinh ra vốn được lập trình như một ổ cứng SSD dung lượng 1TB, hoạt động siêu tốc độ. Nhưng kể từ khi quen em, hệ thống đã bị lây nhiễm một loại virus tống tiền mang tên 'LoveYou.exe'. Virus này mã hóa toàn bộ dữ liệu trí nhớ, và mật khẩu duy nhất để giải mã hệ thống chính là một cái gật đầu của em. Cấu hình máy anh tuy dạo này hơi yếu do nhịn ăn mua quà cho em, nhưng chạy đa nhiệm ứng dụng 'Yêu Em' thì mượt mà khỏi bàn!",
-                // Kinh tế
-                "Theo nguyên lý cơ bản của kinh tế học vĩ mô, nhu cầu của con người luôn luôn tỉ lệ nghịch với giá cả hàng hóa. Giá càng cao, người ta càng ít mua. Nhưng quy luật này hoàn toàn vô dụng với tình yêu anh dành cho em. Anh bất chấp mọi lạm phát, bỏ qua mọi đợt suy thoái kinh tế toàn cầu. Dù giá vàng có lên 100 triệu hay 200 triệu một lượng, thì em vẫn luôn là khối tài sản vô giá, độ thanh khoản bằng không vì anh tuyệt đối không bao giờ bán!",
-                // Triết học
-                "Triết học Mác - Lênin dạy chúng ta rằng mọi sự vật hiện tượng trong vũ trụ đều vận động và phát triển không ngừng. Tình yêu của anh dành cho em cũng y hệt như vậy, nó hoàn toàn tuân theo quy luật lượng - chất. Sự tích lũy ròng rã về lượng 'nhớ nhung' sau mỗi ngày đã dẫn đến một sự nhảy vọt vĩ đại về chất, biến đổi anh từ một chàng trai bình thường thành một con nghiện mang tên em.",
-                // Địa lý
-                "Sách địa lý ghi rằng Trái Đất quay quanh trục của nó và quay quanh Mặt Trời mất 365 ngày một phần tư. Nhưng anh quay quanh em thì chẳng tốn một giây nào sất, vì em đã tự động dùng lực hấp dẫn ép mình thành trung tâm vũ trụ của anh mất rồi. Dù em có mù đường, đi lạc đến kinh độ hay vĩ độ nào trên quả địa cầu này, la bàn định vị trong trái tim anh vẫn luôn chỉ thẳng về hướng em.",
-                // Thơ 3
-                "Gió đưa cành trúc la đà.<br>Tiếng chuông Trấn Vũ canh gà Thọ Xương.<br>Em ơi xin hãy tỏ tường.<br>Tình anh to bằng cái giường king-size.<br>Giường to nhưng chỉ hai ta.<br>Cùng nhau đắp chăn xem phim kinh dị tới già.",
-                // Troll 1
-                "Này cô gái đang cầm điện thoại kia, anh đã nhắc nhở bao nhiêu lần rồi hả? Đừng có tự ý chạy lung tung trong tâm trí anh nữa. Em đã trả đồng tiền thuê trọ nào cho tâm trí anh chưa mà ngang nhiên cư trú bất hợp pháp như thế? Mà thôi bỏ đi, em cứ ở nguyên đấy. Anh nhận thầu bao trọn gói chỗ ở, điện nước miễn phí, wifi full vạch tốc độ cao, chỉ cần em hứa đừng chuyển hộ khẩu đi đâu là được.",
-                // Văn học
-                "Nếu tình yêu của chúng ta được chuyển thể thành một tác phẩm văn học, thì anh xin đính chính anh không phải là cố nhà văn Nam Cao để viết ra thiên tình sử Chí Phèo - Thị Nở rạch mặt ăn vạ. Anh cũng không phải Xuân Diệu để yêu đương vội vàng cuống quýt. Anh chỉ là một kẻ tay ngang, dùng cả thanh xuân và số tiền tiết kiệm ít ỏi để chắp bút viết nên câu chuyện dài tập này. Mà ác nỗi, nữ chính của truyện lại đang bị anh bóc lột sức lao động, mỏi tay vuốt màn hình nãy giờ vẫn chưa thấy kết thúc =))",
-                // Random 2
-                "Em có biết tại sao bánh Trung Thu truyền thống lại có hình tròn hoặc hình vuông không? Sách cổ giải thích rằng: Vuông là biểu tượng sự vững chãi vẹn toàn của đất, tròn là sự viên mãn không tì vết của bầu trời. Còn anh thì cái mặt chẳng tròn cũng chẳng vuông, anh chỉ có 'méo mặt' vì nhịn ăn nhịn mặc mua quà cho em thôi. Đề nghị em xem xét đền bù tổn thất tinh thần này bằng một cái ôm thật chặt đêm nay!",
-                // Ngẫu nhiên troll độ dài
-                "Vuốt mỏi tay chưa cục cưng? Vuốt nữa đi, mới được có tí chữ mà đã than mỏi rồi à. Đường đi vào tim anh có thể gần chỉ bằng một nụ cười, nhưng con đường để kéo đến dòng cuối cùng của cái tâm thư 20.000 chữ này thì còn xa xăm mù mịt lắm. Ai bảo bình thường ở nhà em toàn bắt nạt anh làm chi, hôm nay anh thiết kế cái web này là để cho em rèn luyện cơ ngón tay, tăng cường thể lực phần chi trên để mốt bưng mâm quả cho nó khỏe đấy! Ráng lên cô gái, vạn sự khởi đầu nan, gian nan bắt đầu nản!"
+            const textData = [
+                "Trăng kia lúc khuyết lúc tròn,<br>Tình anh vẫn mãi sắt son một màu.<br>Trung thu dẫu có qua mau,<br>Thương em anh nguyện trước sau vẹn toàn.",
+                "Nếu tình yêu của chúng ta là một hệ phương trình, thì em chắc chắn là nghiệm số duy nhất khiến mọi định lý của anh đều trở nên đúng đắn. Người ta bảo hai đường thẳng song song sẽ chẳng bao giờ cắt nhau, nhưng anh tin rằng trong không gian phi Euclid của tình yêu, hai quỹ đạo của chúng ta đã va chạm và hòa quyện mãi mãi. Không có một giới hạn (limit) nào cho nỗi nhớ anh dành cho em khi tiến tới vô cực...",
+                "Đêm rằm tháng Tám sáng trong,<br>Anh ngồi anh nhớ bóng hồng đời anh.<br>Trời cao lấp lánh sao mây,<br>Trong tim anh chỉ ngập đầy bóng em.",
+                "Xét về mặt Vật lý lượng tử, sự gắn kết giữa hai hạt cơ bản cũng không thể mạnh mẽ bằng lực hấp dẫn mà em tạo ra đối với trái tim anh. Newton tìm ra trọng lực khi quả táo rơi trúng đầu, còn anh tìm ra chân lý cuộc đời khi ánh mắt em vô tình va phải anh. Mọi định luật bảo toàn năng lượng đều vô nghĩa, vì năng lượng tình yêu anh dành cho em là tự sinh ra và không bao giờ mất đi.",
+                "Em biết không, trái tim anh vốn là một chất trơ, lạnh lẽo và không phản ứng với bất kỳ dung môi nào của cuộc đời. Cho đến khi em xuất hiện, em như một chất xúc tác hoàn hảo, phá vỡ mọi liên kết bền vững nhất trong anh, tạo ra một phản ứng tỏa nhiệt dữ dội mang tên 'Tình Yêu'. Phản ứng này không sinh ra khí độc, không có kết tủa, mà chỉ tạo ra một hợp chất ngọt ngào duy nhất kết tinh thành nụ cười của em.",
+                "Theo triết học, mọi sự vật hiện tượng đều vận động và phát triển không ngừng. Nhưng tình cảm anh dành cho em lại là một nghịch lý vĩ đại: Nó vừa mang tính ổn định tuyệt đối, lại vừa phát triển liên tục về mặt lượng và biến đổi sâu sắc về mặt chất. Em là cái 'Tất nhiên' đẹp đẽ nhất xuất hiện trong vô vàn cái 'Ngẫu nhiên' của cuộc đời anh.",
+                "Trung thu trăng sáng như gương,<br>Nhớ em anh mải vấn vương trong lòng.<br>Trời thu mây trắng bềnh bồng,<br>Thương em anh nguyện một lòng sắc son.",
+                "Mùa thu có hương hoa sữa làm người ta xao xuyến, nhưng với anh, sự xao xuyến thực sự chỉ đến từ ánh mắt em. Trung thu người ta ngắm trăng, còn anh chỉ muốn ngắm nhìn khuôn mặt em, bởi trăng dẫu có sáng cũng không thể sưởi ấm trái tim anh như cách em đã làm. Em là bài thơ hay nhất mà anh dùng cả đời để đọc, là cuốn tiểu thuyết anh chẳng bao giờ muốn lật tới trang cuối cùng...",
+                "Người ta thường nói: 'Trăng đến rằm trăng tròn, sao đến tháng sao sáng'. Còn anh thì lại thấy: 'Anh gặp em anh say, tim anh đập anh hay'. Trung thu này anh không cần bánh nướng bánh dẻo, vì sự ngọt ngào của em đã làm anh no nê cả tâm hồn."
             ];
 
-            // --- 4. THUẬT TOÁN INFINITE SCROLL (CUỘN VÔ CỰC 20K CHỮ) ---
-            const loveModal = document.getElementById('love-modal');
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const theMoon = document.getElementById('the-moon');
-            const bgMusic = document.getElementById('bgMusic');
-            const closeModalBtn = document.getElementById('close-modal');
-            
             const modalContent = document.getElementById('modal-content');
             const container = document.getElementById('infinite-scroll-container');
-            const loadingIndicator = document.getElementById('loading-indicator');
             const wordCounterSpan = document.getElementById('word-counter');
-
+            
             const TARGET_WORDS = 20000;
             let currentWordCount = 0;
             let isGenerating = false;
             let isFinished = false;
 
-            // Hàm đếm số chữ trong 1 chuỗi
+            // Hàm đếm chữ bỏ qua thẻ HTML
             const countWords = (str) => {
-                // Xóa thẻ br
-                const cleanStr = str.replace(/<br\s*\/?>/gi, ' ');
+                const cleanStr = str.replace(/<[^>]*>?/gm, ' ');
                 return cleanStr.split(/\s+/).filter(word => word.length > 0).length;
             };
 
-            // Hàm tạo và append 1 lô khoảng 5 đoạn văn
+            // Hàm append nội dung
             const loadMoreParagraphs = () => {
                 if (isFinished || isGenerating) return;
                 isGenerating = true;
-                loadingIndicator.style.display = 'block';
 
-                // Tránh lock UI bằng setTimeout
                 setTimeout(() => {
                     const fragment = document.createDocumentFragment();
                     let chunksAdded = 0;
 
-                    // Mỗi lần cuộn thêm 10 đoạn văn cho mỏi tay
-                    while (chunksAdded < 10 && currentWordCount < TARGET_WORDS) {
-                        const randomText = trollParagraphs[Math.floor(Math.random() * trollParagraphs.length)];
+                    // Mỗi lần load thêm 4-5 đoạn để giữ hiệu năng
+                    while (chunksAdded < 4 && currentWordCount < TARGET_WORDS) {
+                        const randomText = textData[Math.floor(Math.random() * textData.length)];
                         const wordsInText = countWords(randomText);
                         
-                        const p = document.createElement('p');
-                        // Thêm hiệu ứng màu chữ ngẫu nhiên nhẹ cho đỡ chán
-                        const colors = ['text-yellow-200', 'text-pink-200', 'text-blue-200', 'text-green-200'];
-                        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                        const div = document.createElement('div');
+                        div.className = 'fade-in-up';
+
+                        // Xử lý Giao diện: Tách biệt Thơ và Văn xuôi
+                        const isPoem = randomText.includes('<br>');
+                        if (isPoem) {
+                            // Style cho Thơ: Căn giữa, font chữ viết tay, màu vàng neon
+                            div.className += ' text-center font-dancing text-2xl md:text-4xl leading-relaxed neon-poem py-4';
+                            div.innerHTML = randomText;
+                        } else {
+                            // Style cho Văn xuôi: Căn đều, font hiện đại, màu hồng neon, chữ to vừa phải
+                            div.className += ' text-justify font-quicksand text-lg md:text-xl leading-loose neon-essay tracking-wide bg-white/5 p-6 rounded-2xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm';
+                            div.innerHTML = `<p>${randomText}</p>`;
+                        }
                         
-                        p.className = `p-4 bg-white/5 rounded-xl border border-white/10 shadow-lg ${randomColor} transform transition hover:scale-[1.02]`;
-                        p.innerHTML = randomText;
-                        
-                        fragment.appendChild(p);
-                        
+                        fragment.appendChild(div);
                         currentWordCount += wordsInText;
                         chunksAdded++;
                     }
 
                     container.appendChild(fragment);
-                    wordCounterSpan.innerText = currentWordCount.toLocaleString();
+                    
+                    // Cập nhật giao diện đếm chữ (tránh vượt qua 20000)
+                    wordCounterSpan.innerText = Math.min(currentWordCount, TARGET_WORDS).toLocaleString();
 
-                    // Kiểm tra điều kiện dừng (đạt 20k chữ)
                     if (currentWordCount >= TARGET_WORDS) {
                         isFinished = true;
-                        loadingIndicator.style.display = 'none';
                         
-                        // HIỆN CÂU CHỐT HẠ SIÊU TO
-                        const finalMessage = document.createElement('div');
-                        finalMessage.className = 'mt-16 mb-20 p-8 border-4 border-red-500 rounded-3xl bg-red-900/30 text-center';
-                        finalMessage.innerHTML = `
-                            <h2 class="chot-ha font-dancing text-4xl md:text-6xl text-white font-bold leading-tight uppercase">
-                                XONG RỒI! 🎉<br><br>
-                                Cuối cùng, sau hơn 20.000 chữ lải nhải mỏi cả tay, anh chỉ muốn chốt lại một câu là:<br><br>
-                                CHÚC EM TRUNG THU VUI VẺ, ANH YÊU EM RẤT NHIỀU! ❤️❤️❤️
+                        const finalBox = document.createElement('div');
+                        finalBox.className = 'flash-neon-box mt-20 mb-32 p-8 md:p-16 rounded-3xl text-center transform scale-105';
+                        finalBox.innerHTML = `
+                            <h2 class="font-quicksand font-bold text-3xl md:text-5xl leading-tight uppercase flash-neon-text">
+                                CHÚC MỪNG EM ĐÃ ĐỌC HẾT!<br><br>
+                                CẢM ƠN EM VÌ ĐÃ KIÊN NHẪN, TRUNG THU NÀY ANH YÊU EM NHẤT!<br><br>
+                                MAI ANH ĐỀN 10 CỐC TRÀ SỮA ĐỂ BÙ ĐẮP NGÓN TAY NHÉ! ❤️
                             </h2>
-                            <p class="mt-8 text-sm text-gray-400">P/s: Mai anh đền cho ly trà sữa full topping đền bù tổn thất ngón tay nhé! 🧋</p>
                         `;
-                        container.appendChild(finalMessage);
+                        container.appendChild(finalBox);
                     }
 
                     isGenerating = false;
-                    loadingIndicator.style.display = isFinished ? 'none' : 'block';
-                }, 100); // 100ms delay for smoothness
+                }, 150); // Delay nhẹ tạo cảm giác mượt mà
             };
 
             // Lắng nghe sự kiện cuộn
             modalContent.addEventListener('scroll', () => {
                 if (isFinished) return;
-                
-                // Nếu cuộn gần tới đáy (cách đáy 200px)
                 const { scrollTop, scrollHeight, clientHeight } = modalContent;
-                if (scrollTop + clientHeight >= scrollHeight - 200) {
+                // Kích hoạt load thêm khi cách đáy 300px
+                if (scrollTop + clientHeight >= scrollHeight - 300) {
                     loadMoreParagraphs();
                 }
             });
 
-            // --- 5. TƯƠNG TÁC NGƯỜI DÙNG ---
-            theMoon.addEventListener('click', () => {
-                // Bật nhạc
-                bgMusic.play().catch(e => console.log("Lỗi autoplay nhạc:", e));
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const loveModal = document.getElementById('love-modal');
+            const bgMusic = document.getElementById('bgMusic');
+            const theMoon = document.getElementById('the-moon');
 
-                // Ẩn màn hình chính
-                welcomeScreen.classList.add('opacity-0', 'pointer-events-none');
+            theMoon.addEventListener('click', () => {
+                // Kích hoạt âm thanh
+                bgMusic.play().catch(e => console.log("Autoplay bị chặn", e));
+
+                // Fade out màn hình chào
+                welcomeScreen.style.opacity = '0';
                 
                 setTimeout(() => {
+                    welcomeScreen.classList.add('hidden');
+                    
                     // Hiện Modal
                     loveModal.classList.remove('hidden');
-                    loveModal.classList.add('flex'); // Dùng flex để canh giữa
+                    loveModal.classList.add('flex');
                     
-                    // Khởi tạo đoạn chữ ban đầu (để user có cái mà cuộn)
-                    // Tính sẵn số chữ của đoạn Intro
-                    const introText = document.getElementById('intro-paragraph').innerText;
-                    currentWordCount = countWords(introText);
-                    
-                    // Gọi vài lần cho đầy màn hình để xuất hiện thanh cuộn
+                    // Nạp chữ đợt đầu tiên
                     loadMoreParagraphs();
-                    setTimeout(loadMoreParagraphs, 200);
-
-                }, 500); // Chờ animation fade out
-            });
-
-            // Nút đóng modal
-            closeModalBtn.addEventListener('click', () => {
-                loveModal.classList.add('hidden');
-                loveModal.classList.remove('flex');
-                welcomeScreen.classList.remove('opacity-0', 'pointer-events-none');
-                
-                // Trả lại bộ đếm về 0, xóa ruột container để chơi lại nếu muốn
-                container.innerHTML = '';
-                isFinished = false;
-                currentWordCount = countWords(document.getElementById('intro-paragraph').innerText);
-                wordCounterSpan.innerText = "0";
+                    setTimeout(loadMoreParagraphs, 300); // Nạp thêm để lấp đầy màn hình tạo thanh cuộn
+                }, 800);
             });
         });
     </script>
