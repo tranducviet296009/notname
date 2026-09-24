@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trung Thu Trọn Vẹn Cùng Em</title>
-    <!-- Nạp Tailwind CSS để dựng layout nhanh -->
+    
+    <!-- Tải Tailwind CSS cho layout -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Nạp Google Fonts: Dancing Script cho thơ, Quicksand cho văn xuôi -->
+    
+    <!-- Tải Google Fonts: Dancing Script (Thơ) và Quicksand (Văn xuôi) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,10 +16,9 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden; /* Vô hiệu hóa cuộn trang ngoài cùng */
-            background: radial-gradient(circle at 50% 100%, #1a0b2e 0%, #020111 60%, #000000 100%);
+            overflow: hidden; /* Ngăn cuộn trang */
+            background: linear-gradient(to bottom, #020111, #20124d, #000022);
             color: #ffffff;
-            font-family: 'Quicksand', sans-serif;
             height: 100vh;
             width: 100vw;
         }
@@ -25,20 +26,21 @@
         .font-dancing { font-family: 'Dancing Script', cursive; }
         .font-quicksand { font-family: 'Quicksand', sans-serif; }
 
+        /* Hiệu ứng toả sáng mặt trăng */
         @keyframes pulseMoon {
-            0% { box-shadow: 0 0 50px 15px rgba(253, 224, 71, 0.5), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1); }
-            100% { box-shadow: 0 0 100px 30px rgba(253, 224, 71, 0.8), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1.02); }
+            0% { box-shadow: 0 0 50px 15px rgba(253, 224, 71, 0.4), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1); }
+            100% { box-shadow: 0 0 90px 25px rgba(253, 224, 71, 0.7), inset 0 0 30px rgba(0,0,0,0.2); transform: scale(1.03); }
         }
+        
         .moon {
             background: radial-gradient(circle at 35% 35%, #fffde4, #fde047, #ca8a04);
             animation: pulseMoon 4s infinite alternate ease-in-out;
             cursor: pointer;
             transition: all 0.5s ease;
-            position: relative;
-            z-index: 40;
         }
         .moon:hover { filter: brightness(1.2); }
 
+        /* Hiệu ứng Ngôi sao lấp lánh */
         .star {
             position: absolute;
             background-color: #ffffff;
@@ -47,9 +49,10 @@
         }
         @keyframes twinkle {
             0% { opacity: 0.1; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px #fff; }
+            100% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 6px #fff; }
         }
 
+        /* Hiệu ứng Đèn lồng bay */
         .lantern-container {
             position: absolute;
             bottom: -150px;
@@ -65,126 +68,111 @@
             100% { transform: translateY(-120vh) scale(var(--scale)); opacity: 0; }
         }
         @keyframes sway {
-            0% { transform: translateX(-20px) rotate(-8deg); }
-            100% { transform: translateX(20px) rotate(8deg); }
+            0% { transform: translateX(-15px) rotate(-6deg); }
+            100% { transform: translateX(15px) rotate(6deg); }
         }
-        .lantern-glow { filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9)); }
+        .lantern-glow { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.8)); }
 
-        #love-modal {
+        /* Hiệu ứng khung kính (Glassmorphism) */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
-            background-color: rgba(0, 0, 0, 0.6);
-            transition: opacity 0.8s ease;
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Thanh cuộn tuỳ chỉnh cho khung chữ */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(253, 224, 71, 0.5); border-radius: 10px; }
+
+        /* Style chữ phát sáng tinh tế */
+        .neon-prose {
+            color: #fce7f3; /* Hồng nhạt / Pink 100 */
+            text-shadow: 0 0 8px rgba(244, 114, 182, 0.5), 0 0 1px rgba(255, 255, 255, 0.5);
         }
         
-        #modal-content {
-            scrollbar-width: thin;
-            scrollbar-color: #fde047 transparent;
-            mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
-        }
-        #modal-content::-webkit-scrollbar { width: 6px; }
-        #modal-content::-webkit-scrollbar-track { background: transparent; }
-        #modal-content::-webkit-scrollbar-thumb { background: #fde047; border-radius: 10px; }
-
         .neon-poem {
-            color: #fef08a; /* Vàng nhạt */
-            text-shadow: 0 0 5px rgba(253, 224, 71, 0.6), 0 0 15px rgba(234, 179, 8, 0.4);
+            color: #fef08a; /* Vàng nhạt / Yellow 200 */
+            text-shadow: 0 0 10px rgba(253, 224, 71, 0.6), 0 0 2px rgba(255, 255, 255, 0.6);
         }
-        
-        .neon-essay {
-            color: #fce7f3; /* Hồng nhạt */
-            text-shadow: 0 0 4px rgba(244, 114, 182, 0.6), 0 0 12px rgba(219, 39, 119, 0.4);
-        }
-
-        /* Animation xuất hiện mượt mà cho từng đoạn văn */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards ease-out;
-        }
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .flash-neon-box {
-            border: 4px solid #fff;
-            box-shadow: 
-                0 0 10px #ff00de,
-                inset 0 0 10px #ff00de,
-                0 0 20px #ff00de,
-                inset 0 0 20px #ff00de,
-                0 0 40px #ff00de;
-            animation: boxPulsate 1.5s infinite alternate;
-            background: rgba(255, 0, 222, 0.1);
-        }
-        .flash-neon-text {
-            color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #ff00de,
-                0 0 20px #ff00de,
-                0 0 40px #ff00de,
-                0 0 80px #ff00de;
-            animation: textFlicker 2s infinite alternate;
-        }
-
-        @keyframes boxPulsate {
-            0% { box-shadow: 0 0 10px #ff00de, inset 0 0 10px #ff00de; border-color: #ffb3f0; }
-            100% { box-shadow: 0 0 30px #ff00de, inset 0 0 30px #ff00de, 0 0 60px #ff00de; border-color: #fff; }
-        }
-        @keyframes textFlicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; text-shadow: 0 0 5px #fff, 0 0 10px #ff00de; }
-        }
-
     </style>
 </head>
 
 <body class="relative flex flex-col items-center justify-center">
 
-    <audio id="bgMusic" loop autoplay>
+    <!-- Thẻ âm thanh (Đã thiết lập sẵn src) -->
+    <audio id="bgMusic" loop preload="auto">
         <source src="nhac/trungthu.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Vùng chứa bầu trời sao và đèn lồng -->
+    <!-- Nền vũ trụ -->
     <div id="stars-container" class="absolute inset-0 z-0 pointer-events-none"></div>
     <div id="lanterns-container" class="absolute inset-0 z-10 pointer-events-none overflow-hidden"></div>
 
-    <div id="welcome-screen" class="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
-        <div id="the-moon" class="moon w-40 h-40 md:w-56 md:h-56 rounded-full mb-10" title="Chạm vào mặt trăng đi em!"></div>
+    <!-- Màn hình chào (Bao gồm Mặt trăng) -->
+    <div id="welcome-screen" class="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 transition-opacity duration-1000 ease-in-out">
+        <div id="the-moon" class="moon w-32 h-32 md:w-48 md:h-48 rounded-full mb-8" title="Chạm nhẹ vào anh trăng nhé!"></div>
         <h1 class="font-dancing text-4xl md:text-6xl text-yellow-300 drop-shadow-[0_0_15px_rgba(253,224,71,0.8)] mb-4 leading-tight">
-            Gửi Tình Yêu Của Anh
+            Gửi Trọn Tình Yêu
         </h1>
-        <p class="text-gray-300 text-sm md:text-lg italic animate-pulse">
-            (Chạm nhẹ vào mặt trăng để bắt đầu nhé...)
+        <p class="text-gray-300 text-sm md:text-lg italic animate-pulse font-quicksand">
+            (Chạm nhẹ vào mặt trăng nhé em...)
         </p>
     </div>
 
-    <div id="love-modal" class="fixed inset-0 z-40 hidden flex-col items-center justify-center px-2 py-4 md:p-6">
+    <!-- Khung chứa Tâm Thư (Ẩn ban đầu, sẽ fade-in sau khi click) -->
+    <div id="love-message-container" class="absolute inset-0 z-40 hidden flex-col items-center justify-center px-4 py-8 opacity-0 transition-opacity duration-1000 ease-in-out">
         
-        <div class="w-full max-w-5xl h-[95vh] relative rounded-3xl flex flex-col bg-transparent">
+        <div class="glass-panel w-full max-w-4xl max-h-[90vh] rounded-3xl p-6 md:p-12 overflow-y-auto custom-scrollbar relative">
             
-            <!-- Header Modal: Chứa Tiêu đề và Bộ đếm chữ -->
-            <div class="flex justify-between items-center p-4 md:px-8 pb-6 border-b border-yellow-500/20">
-                <h2 class="font-dancing text-3xl md:text-4xl text-yellow-300 font-bold tracking-wider drop-shadow-[0_0_10px_rgba(253,224,71,0.6)]">
-                    Lời Trái Tim
-                </h2>
-                <!-- Bộ đếm chữ góc trên bên phải -->
-                <div class="flex items-center gap-2">
-                    <div class="px-4 py-2 rounded-full border border-pink-500/50 bg-pink-900/20 shadow-[0_0_10px_rgba(236,72,153,0.3)] backdrop-blur-sm">
-                        <span class="text-sm md:text-base text-pink-200 font-semibold font-quicksand">
-                            Words: <span id="word-counter" class="text-white">0</span> / 20000
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <!-- Biểu tượng trang trí góc -->
+            <div class="absolute top-4 left-4 text-yellow-400/30 font-dancing text-6xl">“</div>
+            
+            <div class="relative z-10">
+                <!-- Đoạn văn xuôi (Quicksand, Justified, Pink Glow) -->
+                <p class="font-quicksand text-base md:text-xl leading-loose text-justify neon-prose mb-12 tracking-wide">
+                    Dưới bầu trời đêm thu tháng Tám, khi ánh trăng tròn vành vạnh dát vàng lên từng kẽ lá, anh lại thấy lòng mình bình yên đến lạ khi nghĩ về em. Người ta nói Trung thu là Tết đoàn viên, là dịp để những người yêu thương xích lại gần nhau. Với anh, Trung thu tuyệt vời nhất không phải là mâm cỗ đầy ắp hay những chiếc đèn lồng rực rỡ ngoài kia, mà là khoảnh khắc có em kề bên. Từ ngày em bước vào cuộc đời anh, mọi thứ dường như trở nên dịu dàng và ấm áp hơn. Ánh trăng ngoài cửa sổ dẫu có sáng ngời đến mấy cũng chẳng thể sánh bằng nụ cười lấp lánh của em. Anh muốn mượn ánh trăng rằm hôm nay để gửi gắm tất cả những chân thành và yêu thương sâu đậm nhất từ tận đáy lòng mình. Cảm ơn em - mảnh ghép hoàn hảo nhất, đã đến và thắp sáng bầu trời đêm của anh. Chúc người con gái anh yêu một đời an nhiên, một đời hạnh phúc, mãi mãi là vầng trăng sáng trong trái tim anh.
+                </p>
 
-            <!-- Body Modal: Nơi chứa nội dung (Infinite Scroll) -->
-            <div id="modal-content" class="flex-1 overflow-y-auto px-4 md:px-12 py-8 scroll-smooth">
-                <div id="infinite-scroll-container" class="space-y-12 md:space-y-16 max-w-3xl mx-auto pb-20">
-                    <!-- Nội dung sẽ được append vào đây -->
+                <!-- Đường kẻ phân cách nghệ thuật -->
+                <div class="flex items-center justify-center space-x-4 mb-10 opacity-70">
+                    <div class="h-px bg-gradient-to-r from-transparent to-yellow-400 w-1/4"></div>
+                    <svg class="w-6 h-6 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <div class="h-px bg-gradient-to-l from-transparent to-yellow-400 w-1/4"></div>
+                </div>
+
+                <!-- Bài thơ (Dancing Script, Centered, Yellow Glow) -->
+                <div class="font-dancing text-2xl md:text-4xl leading-relaxed text-center neon-poem space-y-6">
+                    <p>
+                        Đêm rằm tháng Tám trăng thanh,<br>
+                        Gió thu nhè nhẹ vấn quanh hiên nhà.<br>
+                        Ngước nhìn một ánh trăng ngà,<br>
+                        Lòng anh chợt thấy thiết tha bóng nàng.
+                    </p>
+                    <p>
+                        Đèn lồng tỏa sắc đỏ vàng,<br>
+                        Cũng không rực rỡ bằng nàng đêm nay.<br>
+                        Tay đan ấp ủ bàn tay,<br>
+                        Nghe tình yêu đọng men say đất trời.
+                    </p>
+                    <p>
+                        Trung thu rộn rã muôn nơi,<br>
+                        Chỉ mong ta mãi trọn đời bên nhau.<br>
+                        Dẫu cho vật đổi sao dời,<br>
+                        Tình anh vẫn vậy, trước sau chung tình.
+                    </p>
+                    <p>
+                        Mây ngàn gió núi lặng thinh,<br>
+                        Nhường cho giây phút đôi mình bên nhau.<br>
+                        Trăng rằm thắp sáng ngàn sao,<br>
+                        Trao em trọn vẹn ngọt ngào đêm nay.
+                    </p>
                 </div>
             </div>
+            
+            <div class="absolute bottom-4 right-4 text-yellow-400/30 font-dancing text-6xl">”</div>
         </div>
     </div>
 
@@ -192,20 +180,21 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             const starsContainer = document.getElementById('stars-container');
-            for (let i = 0; i < 200; i++) {
+            const numStars = 150;
+            for (let i = 0; i < numStars; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = `${Math.random() * 100}vw`;
                 star.style.top = `${Math.random() * 100}vh`;
-                star.style.width = star.style.height = `${Math.random() * 2.5 + 0.5}px`;
-                star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
+                star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`;
                 starsContainer.appendChild(star);
             }
 
             const lanternsContainer = document.getElementById('lanterns-container');
             const lanternSVG = `
-                <svg width="45" height="65" viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg" class="lantern-glow">
+                <svg width="35" height="50" viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg" class="lantern-glow">
                     <line x1="25" y1="0" x2="25" y2="5" stroke="#FBBF24" stroke-width="2"/>
                     <rect x="15" y="5" width="20" height="4" fill="#F59E0B" rx="1"/>
                     <ellipse cx="25" cy="27" rx="20" ry="18" fill="#EF4444"/>
@@ -217,141 +206,57 @@
                     <line x1="30" y1="49" x2="35" y2="60" stroke="#FBBF24" stroke-width="1.5"/>
                 </svg>
             `;
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 20; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'lantern-container';
-                wrapper.style.left = `${Math.random() * 90 + 5}vw`; // Tránh sát lề quá
-                wrapper.style.setProperty('--float-duration', `${Math.random() * 25 + 20}s`);
-                wrapper.style.animationDelay = `${Math.random() * 30}s`;
+                wrapper.style.left = `${Math.random() * 95}vw`; 
+                wrapper.style.setProperty('--float-duration', `${Math.random() * 20 + 15}s`);
+                wrapper.style.animationDelay = `${Math.random() * 20}s`;
                 
                 const swayDiv = document.createElement('div');
                 swayDiv.className = 'lantern-sway';
                 swayDiv.innerHTML = lanternSVG;
-                swayDiv.style.setProperty('--sway-duration', `${Math.random() * 2.5 + 2}s`);
-                swayDiv.style.setProperty('--scale', Math.random() * 0.5 + 0.6);
+                swayDiv.style.setProperty('--sway-duration', `${Math.random() * 2 + 2}s`);
+                swayDiv.style.setProperty('--scale', Math.random() * 0.5 + 0.7);
                 
                 wrapper.appendChild(swayDiv);
                 lanternsContainer.appendChild(wrapper);
             }
 
-            const textData = [
-                "Trăng kia lúc khuyết lúc tròn,<br>Tình anh vẫn mãi sắt son một màu.<br>Trung thu dẫu có qua mau,<br>Thương em anh nguyện trước sau vẹn toàn.",
-                "Nếu tình yêu của chúng ta là một hệ phương trình, thì em chắc chắn là nghiệm số duy nhất khiến mọi định lý của anh đều trở nên đúng đắn. Người ta bảo hai đường thẳng song song sẽ chẳng bao giờ cắt nhau, nhưng anh tin rằng trong không gian phi Euclid của tình yêu, hai quỹ đạo của chúng ta đã va chạm và hòa quyện mãi mãi. Không có một giới hạn (limit) nào cho nỗi nhớ anh dành cho em khi tiến tới vô cực...",
-                "Đêm rằm tháng Tám sáng trong,<br>Anh ngồi anh nhớ bóng hồng đời anh.<br>Trời cao lấp lánh sao mây,<br>Trong tim anh chỉ ngập đầy bóng em.",
-                "Xét về mặt Vật lý lượng tử, sự gắn kết giữa hai hạt cơ bản cũng không thể mạnh mẽ bằng lực hấp dẫn mà em tạo ra đối với trái tim anh. Newton tìm ra trọng lực khi quả táo rơi trúng đầu, còn anh tìm ra chân lý cuộc đời khi ánh mắt em vô tình va phải anh. Mọi định luật bảo toàn năng lượng đều vô nghĩa, vì năng lượng tình yêu anh dành cho em là tự sinh ra và không bao giờ mất đi.",
-                "Em biết không, trái tim anh vốn là một chất trơ, lạnh lẽo và không phản ứng với bất kỳ dung môi nào của cuộc đời. Cho đến khi em xuất hiện, em như một chất xúc tác hoàn hảo, phá vỡ mọi liên kết bền vững nhất trong anh, tạo ra một phản ứng tỏa nhiệt dữ dội mang tên 'Tình Yêu'. Phản ứng này không sinh ra khí độc, không có kết tủa, mà chỉ tạo ra một hợp chất ngọt ngào duy nhất kết tinh thành nụ cười của em.",
-                "Theo triết học, mọi sự vật hiện tượng đều vận động và phát triển không ngừng. Nhưng tình cảm anh dành cho em lại là một nghịch lý vĩ đại: Nó vừa mang tính ổn định tuyệt đối, lại vừa phát triển liên tục về mặt lượng và biến đổi sâu sắc về mặt chất. Em là cái 'Tất nhiên' đẹp đẽ nhất xuất hiện trong vô vàn cái 'Ngẫu nhiên' của cuộc đời anh.",
-                "Trung thu trăng sáng như gương,<br>Nhớ em anh mải vấn vương trong lòng.<br>Trời thu mây trắng bềnh bồng,<br>Thương em anh nguyện một lòng sắc son.",
-                "Mùa thu có hương hoa sữa làm người ta xao xuyến, nhưng với anh, sự xao xuyến thực sự chỉ đến từ ánh mắt em. Trung thu người ta ngắm trăng, còn anh chỉ muốn ngắm nhìn khuôn mặt em, bởi trăng dẫu có sáng cũng không thể sưởi ấm trái tim anh như cách em đã làm. Em là bài thơ hay nhất mà anh dùng cả đời để đọc, là cuốn tiểu thuyết anh chẳng bao giờ muốn lật tới trang cuối cùng...",
-                "Người ta thường nói: 'Trăng đến rằm trăng tròn, sao đến tháng sao sáng'. Còn anh thì lại thấy: 'Anh gặp em anh say, tim anh đập anh hay'. Trung thu này anh không cần bánh nướng bánh dẻo, vì sự ngọt ngào của em đã làm anh no nê cả tâm hồn."
-            ];
-
-            const modalContent = document.getElementById('modal-content');
-            const container = document.getElementById('infinite-scroll-container');
-            const wordCounterSpan = document.getElementById('word-counter');
-            
-            const TARGET_WORDS = 20000;
-            let currentWordCount = 0;
-            let isGenerating = false;
-            let isFinished = false;
-
-            // Hàm đếm chữ bỏ qua thẻ HTML
-            const countWords = (str) => {
-                const cleanStr = str.replace(/<[^>]*>?/gm, ' ');
-                return cleanStr.split(/\s+/).filter(word => word.length > 0).length;
-            };
-
-            // Hàm append nội dung
-            const loadMoreParagraphs = () => {
-                if (isFinished || isGenerating) return;
-                isGenerating = true;
-
-                setTimeout(() => {
-                    const fragment = document.createDocumentFragment();
-                    let chunksAdded = 0;
-
-                    // Mỗi lần load thêm 4-5 đoạn để giữ hiệu năng
-                    while (chunksAdded < 4 && currentWordCount < TARGET_WORDS) {
-                        const randomText = textData[Math.floor(Math.random() * textData.length)];
-                        const wordsInText = countWords(randomText);
-                        
-                        const div = document.createElement('div');
-                        div.className = 'fade-in-up';
-
-                        // Xử lý Giao diện: Tách biệt Thơ và Văn xuôi
-                        const isPoem = randomText.includes('<br>');
-                        if (isPoem) {
-                            // Style cho Thơ: Căn giữa, font chữ viết tay, màu vàng neon
-                            div.className += ' text-center font-dancing text-2xl md:text-4xl leading-relaxed neon-poem py-4';
-                            div.innerHTML = randomText;
-                        } else {
-                            // Style cho Văn xuôi: Căn đều, font hiện đại, màu hồng neon, chữ to vừa phải
-                            div.className += ' text-justify font-quicksand text-lg md:text-xl leading-loose neon-essay tracking-wide bg-white/5 p-6 rounded-2xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm';
-                            div.innerHTML = `<p>${randomText}</p>`;
-                        }
-                        
-                        fragment.appendChild(div);
-                        currentWordCount += wordsInText;
-                        chunksAdded++;
-                    }
-
-                    container.appendChild(fragment);
-                    
-                    // Cập nhật giao diện đếm chữ (tránh vượt qua 20000)
-                    wordCounterSpan.innerText = Math.min(currentWordCount, TARGET_WORDS).toLocaleString();
-
-                    if (currentWordCount >= TARGET_WORDS) {
-                        isFinished = true;
-                        
-                        const finalBox = document.createElement('div');
-                        finalBox.className = 'flash-neon-box mt-20 mb-32 p-8 md:p-16 rounded-3xl text-center transform scale-105';
-                        finalBox.innerHTML = `
-                            <h2 class="font-quicksand font-bold text-3xl md:text-5xl leading-tight uppercase flash-neon-text">
-                                CHÚC MỪNG EM ĐÃ ĐỌC HẾT!<br><br>
-                                CẢM ƠN EM VÌ ĐÃ KIÊN NHẪN, TRUNG THU NÀY ANH YÊU EM NHẤT!<br><br>
-                                MAI ANH ĐỀN 10 CỐC TRÀ SỮA ĐỂ BÙ ĐẮP NGÓN TAY NHÉ! ❤️
-                            </h2>
-                        `;
-                        container.appendChild(finalBox);
-                    }
-
-                    isGenerating = false;
-                }, 150); // Delay nhẹ tạo cảm giác mượt mà
-            };
-
-            // Lắng nghe sự kiện cuộn
-            modalContent.addEventListener('scroll', () => {
-                if (isFinished) return;
-                const { scrollTop, scrollHeight, clientHeight } = modalContent;
-                // Kích hoạt load thêm khi cách đáy 300px
-                if (scrollTop + clientHeight >= scrollHeight - 300) {
-                    loadMoreParagraphs();
-                }
-            });
-
+            const moon = document.getElementById('the-moon');
             const welcomeScreen = document.getElementById('welcome-screen');
-            const loveModal = document.getElementById('love-modal');
+            const messageContainer = document.getElementById('love-message-container');
             const bgMusic = document.getElementById('bgMusic');
-            const theMoon = document.getElementById('the-moon');
+            
+            let isClicked = false;
 
-            theMoon.addEventListener('click', () => {
-                // Kích hoạt âm thanh
-                bgMusic.play().catch(e => console.log("Autoplay bị chặn", e));
+            moon.addEventListener('click', () => {
+                if (isClicked) return;
+                isClicked = true;
 
-                // Fade out màn hình chào
-                welcomeScreen.style.opacity = '0';
+                // 1. Chỉnh âm lượng về mức 0.3 (30%) và phát nhạc
+                bgMusic.volume = 0.3;
+                bgMusic.play().catch(err => console.log("Trình duyệt chặn autoplay:", err));
+
+                // 2. Fade out màn hình chào
+                welcomeScreen.classList.remove('opacity-100');
+                welcomeScreen.classList.add('opacity-0');
                 
+                // 3. Đợi mờ hẳn rồi ẩn hẳn đi, sau đó hiện Khung tâm thư
                 setTimeout(() => {
                     welcomeScreen.classList.add('hidden');
+                    welcomeScreen.classList.remove('flex');
                     
-                    // Hiện Modal
-                    loveModal.classList.remove('hidden');
-                    loveModal.classList.add('flex');
+                    messageContainer.classList.remove('hidden');
+                    messageContainer.classList.add('flex');
                     
-                    // Nạp chữ đợt đầu tiên
-                    loadMoreParagraphs();
-                    setTimeout(loadMoreParagraphs, 300); // Nạp thêm để lấp đầy màn hình tạo thanh cuộn
-                }, 800);
+                    // Delay 1 xíu để CSS nhận diện hiển thị block trước khi fade-in
+                    setTimeout(() => {
+                        messageContainer.classList.remove('opacity-0');
+                        messageContainer.classList.add('opacity-100');
+                    }, 50);
+                    
+                }, 1000); // Khớp với duration-1000 của CSS
             });
         });
     </script>
